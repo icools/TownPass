@@ -58,6 +58,7 @@ import com.example.townpass.ui.components.TPTopAppBar
 import com.example.townpass.ui.theme.TPGray100
 import com.example.townpass.ui.theme.TPGray400
 import com.example.townpass.ui.theme.TPGray50
+import com.example.townpass.ui.theme.TPGray500
 import com.example.townpass.ui.theme.TPGray700
 import com.example.townpass.ui.theme.TPGray900
 import com.example.townpass.ui.theme.TPGray950
@@ -70,7 +71,8 @@ fun CityServiceScreen(
     viewModel: ServiceViewModel,
     onNavigateToAccount: () -> Unit,
     onNavigateToEditServices: () -> Unit,
-    onNavigateToWeb: (String, String) -> Unit
+    onNavigateToWeb: (String, String) -> Unit,
+    onNavigateToOpenData: () -> Unit = {}
 ) {
     val pinnedServices by viewModel.pinnedServices.collectAsState()
 
@@ -184,6 +186,68 @@ fun CityServiceScreen(
                         onNavigateToWeb("https://taipei-pass-service.vercel.app/1999", "1999網路電話")
                     }
                 )
+            }
+
+            // Taipei Open Data Dashboard Banner
+            item {
+                Spacer(modifier = Modifier.height(14.dp))
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = TPWhite),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .clickable { onNavigateToOpenData() }
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(TPPrimaryTeal.copy(alpha = 0.12f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Widgets,
+                                contentDescription = "Open Data",
+                                tint = TPPrimaryTeal,
+                                modifier = Modifier.size(28.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(14.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = "台北即時 Open Data 儀表板",
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = TPGray900
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                com.example.townpass.ui.a2ui.LivePulseBadge(text = "LIVE")
+                            }
+                            Spacer(modifier = Modifier.height(3.dp))
+                            Text(
+                                text = "串接 12 項市政即時開放資料 (YouBike、捷運、停車、AQI)",
+                                fontSize = 12.sp,
+                                color = TPGray500,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                        Icon(
+                            imageVector = Icons.Default.ChevronRight,
+                            contentDescription = "查看",
+                            tint = TPGray400
+                        )
+                    }
+                }
             }
 
             // Trending Services

@@ -49,3 +49,7 @@ data class WebViewNavKey(
     val url: String,
     val title: String = ""
 ) : NavKey
+
+@Serializable
+data object TaipeiOpenDataNavKey : NavKey
+

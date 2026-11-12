@@ -66,15 +66,19 @@ import com.example.townpass.util.DateTimeUtils
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
+    openDataViewModel: com.example.townpass.ui.a2ui.TaipeiOpenDataViewModel,
     onNavigateToAccount: () -> Unit,
     onNavigateToActivityList: () -> Unit,
     onNavigateToActivityDetail: (String) -> Unit,
     onNavigateToWeb: (String, String) -> Unit,
-    onNavigateToMessage: () -> Unit
+    onNavigateToMessage: () -> Unit,
+    onNavigateToOpenData: () -> Unit = {}
 ) {
     val banners by viewModel.banners.collectAsState()
     val activities by viewModel.activities.collectAsState()
     val subscriptions by viewModel.subscriptions.collectAsState()
+    val openDataCards by openDataViewModel.filteredCards.collectAsState()
+
 
     Scaffold(
         topBar = {
@@ -116,6 +120,70 @@ fun HomeScreen(
                         banners = banners,
                         onBannerClick = { banner ->
                             onNavigateToWeb(banner.webUrl, banner.title)
+                        }
+                    )
+                }
+            }
+
+            // 1.5. Taipei Open Data Live Dynamic Section (A2UI)
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = "台北即時動態",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = TPGray900
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        com.example.townpass.ui.a2ui.LivePulseBadge(text = "LIVE")
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable { onNavigateToOpenData() }
+                            .padding(horizontal = 6.dp, vertical = 4.dp)
+                    ) {
+                        Text(
+                            text = "全部 (12)",
+                            fontSize = 14.sp,
+                            color = TPPrimaryTeal,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ChevronRight,
+                            contentDescription = "查看全部",
+                            tint = TPPrimaryTeal,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                }
+            }
+
+            // Top dynamic live cards
+            items(
+                items = openDataCards.take(3),
+                key = { "home_${it.id}" }
+            ) { cardData ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 6.dp)
+                ) {
+                    com.example.townpass.ui.a2ui.A2UICard(
+                        card = cardData,
+                        initialExpanded = false,
+                        onActionClick = { action ->
+                            if (action.url != null) {
+                                onNavigateToWeb(action.url, cardData.title)
+                            }
                         }
                     )
                 }

@@ -17,6 +17,7 @@ import com.example.townpass.ui.home.HomeViewModel
 import com.example.townpass.ui.perk.PerkScreen
 import com.example.townpass.ui.perk.PerkViewModel
 import com.example.townpass.ui.service.CityServiceScreen
+import com.example.townpass.ui.a2ui.TaipeiOpenDataViewModel
 import com.example.townpass.ui.service.ServiceViewModel
 import com.example.townpass.ui.theme.TPGray50
 
@@ -27,12 +28,14 @@ fun MainScreen(
     serviceViewModel: ServiceViewModel,
     perkViewModel: PerkViewModel,
     billViewModel: BillViewModel,
+    openDataViewModel: TaipeiOpenDataViewModel,
     onNavigateToAccount: () -> Unit,
     onNavigateToActivityList: () -> Unit,
     onNavigateToActivityDetail: (String) -> Unit,
     onNavigateToEditServices: () -> Unit,
     onNavigateToWeb: (String, String) -> Unit,
-    onNavigateToMessage: () -> Unit
+    onNavigateToMessage: () -> Unit,
+    onNavigateToOpenData: () -> Unit
 ) {
     val currentTab by mainViewModel.currentTab.collectAsState()
 
@@ -55,15 +58,18 @@ fun MainScreen(
                     viewModel = serviceViewModel,
                     onNavigateToAccount = onNavigateToAccount,
                     onNavigateToEditServices = onNavigateToEditServices,
-                    onNavigateToWeb = onNavigateToWeb
+                    onNavigateToWeb = onNavigateToWeb,
+                    onNavigateToOpenData = onNavigateToOpenData
                 )
                 MainTab.HOME -> HomeScreen(
                     viewModel = homeViewModel,
+                    openDataViewModel = openDataViewModel,
                     onNavigateToAccount = onNavigateToAccount,
                     onNavigateToActivityList = onNavigateToActivityList,
                     onNavigateToActivityDetail = onNavigateToActivityDetail,
                     onNavigateToWeb = onNavigateToWeb,
-                    onNavigateToMessage = onNavigateToMessage
+                    onNavigateToMessage = onNavigateToMessage,
+                    onNavigateToOpenData = onNavigateToOpenData
                 )
                 MainTab.PERK -> PerkScreen(
                     viewModel = perkViewModel,

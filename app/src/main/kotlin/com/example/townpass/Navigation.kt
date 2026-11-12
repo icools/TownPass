@@ -47,8 +47,10 @@ fun MainNavigation() {
     val activityViewModel = remember { ActivityViewModel(repository) }
     val settingViewModel = remember { SettingViewModel(repository) }
     val feedbackViewModel = remember { FeedbackViewModel() }
+    val openDataViewModel = remember { com.example.townpass.ui.a2ui.TaipeiOpenDataViewModel() }
 
     val backStack = rememberNavBackStack(MainNavKey)
+
 
     NavDisplay(
         backStack = backStack,
@@ -65,12 +67,14 @@ fun MainNavigation() {
                     serviceViewModel = serviceViewModel,
                     perkViewModel = perkViewModel,
                     billViewModel = billViewModel,
+                    openDataViewModel = openDataViewModel,
                     onNavigateToAccount = { backStack.add(AccountNavKey) },
                     onNavigateToActivityList = { backStack.add(ActivityListNavKey) },
                     onNavigateToActivityDetail = { id -> backStack.add(ActivityDetailNavKey(id)) },
                     onNavigateToEditServices = { backStack.add(ServiceEditNavKey) },
                     onNavigateToWeb = { url, title -> backStack.add(WebViewNavKey(url, title)) },
-                    onNavigateToMessage = { backStack.add(MessageNavKey) }
+                    onNavigateToMessage = { backStack.add(MessageNavKey) },
+                    onNavigateToOpenData = { backStack.add(TaipeiOpenDataNavKey) }
                 )
             }
             entry<AccountNavKey> {
@@ -155,6 +159,13 @@ fun MainNavigation() {
                     url = navKey.url,
                     title = navKey.title,
                     onNavigateBack = { backStack.removeLastOrNull() }
+                )
+            }
+            entry<TaipeiOpenDataNavKey> {
+                com.example.townpass.ui.a2ui.TaipeiOpenDataScreen(
+                    viewModel = openDataViewModel,
+                    onNavigateBack = { backStack.removeLastOrNull() },
+                    onNavigateToWeb = { url, title -> backStack.add(WebViewNavKey(url, title)) }
                 )
             }
         }
