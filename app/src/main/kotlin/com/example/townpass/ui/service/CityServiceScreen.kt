@@ -72,7 +72,8 @@ fun CityServiceScreen(
     onNavigateToAccount: () -> Unit,
     onNavigateToEditServices: () -> Unit,
     onNavigateToWeb: (String, String) -> Unit,
-    onNavigateToOpenData: () -> Unit = {}
+    onNavigateToOpenData: () -> Unit = {},
+    onNavigateToYouBike: () -> Unit = {}
 ) {
     val pinnedServices by viewModel.pinnedServices.collectAsState()
 
@@ -157,7 +158,11 @@ fun CityServiceScreen(
                                     ServiceGridItem(
                                         service = service,
                                         onClick = {
-                                            onNavigateToWeb(service.destinationUrl, service.title)
+                                            if (service.title.contains("YouBike", ignoreCase = true) || service.id.contains("youbike", ignoreCase = true)) {
+                                                onNavigateToYouBike()
+                                            } else {
+                                                onNavigateToWeb(service.destinationUrl, service.title)
+                                            }
                                         },
                                         modifier = Modifier.weight(1f)
                                     )

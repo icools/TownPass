@@ -72,7 +72,8 @@ import com.example.townpass.ui.theme.TPWhite
 fun TaipeiOpenDataScreen(
     viewModel: TaipeiOpenDataViewModel,
     onNavigateBack: () -> Unit,
-    onNavigateToWeb: (String, String) -> Unit
+    onNavigateToWeb: (String, String) -> Unit,
+    onNavigateToYouBike: () -> Unit = {}
 ) {
     val cards by viewModel.filteredCards.collectAsState()
     val selectedCategory by viewModel.selectedCategory.collectAsState()
@@ -301,7 +302,9 @@ fun TaipeiOpenDataScreen(
                             card = cardData,
                             initialExpanded = false,
                             onActionClick = { action ->
-                                if (action.url != null) {
+                                if (cardData.sourceKey == "TAIPEI_YOUBIKE" || action.actionType == "OPEN_YOUBIKE_MAP") {
+                                    onNavigateToYouBike()
+                                } else if (action.url != null) {
                                     onNavigateToWeb(action.url, cardData.title)
                                 }
                             }

@@ -72,7 +72,8 @@ fun HomeScreen(
     onNavigateToActivityDetail: (String) -> Unit,
     onNavigateToWeb: (String, String) -> Unit,
     onNavigateToMessage: () -> Unit,
-    onNavigateToOpenData: () -> Unit = {}
+    onNavigateToOpenData: () -> Unit = {},
+    onNavigateToYouBike: () -> Unit = {}
 ) {
     val banners by viewModel.banners.collectAsState()
     val activities by viewModel.activities.collectAsState()
@@ -181,7 +182,9 @@ fun HomeScreen(
                         card = cardData,
                         initialExpanded = false,
                         onActionClick = { action ->
-                            if (action.url != null) {
+                            if (cardData.sourceKey == "TAIPEI_YOUBIKE" || action.actionType == "OPEN_YOUBIKE_MAP") {
+                                onNavigateToYouBike()
+                            } else if (action.url != null) {
                                 onNavigateToWeb(action.url, cardData.title)
                             }
                         }

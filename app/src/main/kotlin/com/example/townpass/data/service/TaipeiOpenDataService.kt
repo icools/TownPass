@@ -124,7 +124,7 @@ class TaipeiOpenDataService {
             ),
             progress = A2UIProgress(baseAvail.toFloat(), (baseAvail + baseEmpty).toFloat(), "即時車輛充裕度"),
             tags = listOf("YouBike 2.0", "綠色運具", "即時站點"),
-            action = A2UIAction("查看全台北站點地圖", "OPEN_URL", "https://www.youbike.com.tw/region/taipei/stations/"),
+            action = A2UIAction("開啟 YouBike 2.0 即時地圖與車位", "OPEN_YOUBIKE_MAP", "https://www.youbike.com.tw/region/taipei/stations/"),
             lastUpdated = nowStr,
             updateIntervalSeconds = 5
         )

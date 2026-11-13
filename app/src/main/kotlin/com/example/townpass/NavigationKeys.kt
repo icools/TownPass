@@ -53,3 +53,7 @@ data class WebViewNavKey(
 @Serializable
 data object TaipeiOpenDataNavKey : NavKey
 
+@Serializable
+data object YouBikeNavKey : NavKey
+
+

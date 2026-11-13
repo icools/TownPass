@@ -35,7 +35,8 @@ fun MainScreen(
     onNavigateToEditServices: () -> Unit,
     onNavigateToWeb: (String, String) -> Unit,
     onNavigateToMessage: () -> Unit,
-    onNavigateToOpenData: () -> Unit
+    onNavigateToOpenData: () -> Unit,
+    onNavigateToYouBike: () -> Unit = {}
 ) {
     val currentTab by mainViewModel.currentTab.collectAsState()
 
@@ -59,7 +60,8 @@ fun MainScreen(
                     onNavigateToAccount = onNavigateToAccount,
                     onNavigateToEditServices = onNavigateToEditServices,
                     onNavigateToWeb = onNavigateToWeb,
-                    onNavigateToOpenData = onNavigateToOpenData
+                    onNavigateToOpenData = onNavigateToOpenData,
+                    onNavigateToYouBike = onNavigateToYouBike
                 )
                 MainTab.HOME -> HomeScreen(
                     viewModel = homeViewModel,
@@ -69,7 +71,8 @@ fun MainScreen(
                     onNavigateToActivityDetail = onNavigateToActivityDetail,
                     onNavigateToWeb = onNavigateToWeb,
                     onNavigateToMessage = onNavigateToMessage,
-                    onNavigateToOpenData = onNavigateToOpenData
+                    onNavigateToOpenData = onNavigateToOpenData,
+                    onNavigateToYouBike = onNavigateToYouBike
                 )
                 MainTab.PERK -> PerkScreen(
                     viewModel = perkViewModel,

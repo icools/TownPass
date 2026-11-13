@@ -48,6 +48,7 @@ fun MainNavigation() {
     val settingViewModel = remember { SettingViewModel(repository) }
     val feedbackViewModel = remember { FeedbackViewModel() }
     val openDataViewModel = remember { com.example.townpass.ui.a2ui.TaipeiOpenDataViewModel() }
+    val youBikeViewModel = remember { com.example.townpass.ui.youbike.YouBikeViewModel() }
 
     val backStack = rememberNavBackStack(MainNavKey)
 
@@ -74,7 +75,8 @@ fun MainNavigation() {
                     onNavigateToEditServices = { backStack.add(ServiceEditNavKey) },
                     onNavigateToWeb = { url, title -> backStack.add(WebViewNavKey(url, title)) },
                     onNavigateToMessage = { backStack.add(MessageNavKey) },
-                    onNavigateToOpenData = { backStack.add(TaipeiOpenDataNavKey) }
+                    onNavigateToOpenData = { backStack.add(TaipeiOpenDataNavKey) },
+                    onNavigateToYouBike = { backStack.add(YouBikeNavKey) }
                 )
             }
             entry<AccountNavKey> {
@@ -165,7 +167,14 @@ fun MainNavigation() {
                 com.example.townpass.ui.a2ui.TaipeiOpenDataScreen(
                     viewModel = openDataViewModel,
                     onNavigateBack = { backStack.removeLastOrNull() },
-                    onNavigateToWeb = { url, title -> backStack.add(WebViewNavKey(url, title)) }
+                    onNavigateToWeb = { url, title -> backStack.add(WebViewNavKey(url, title)) },
+                    onNavigateToYouBike = { backStack.add(YouBikeNavKey) }
+                )
+            }
+            entry<YouBikeNavKey> {
+                com.example.townpass.ui.youbike.YouBikeScreen(
+                    viewModel = youBikeViewModel,
+                    onNavigateBack = { backStack.removeLastOrNull() }
                 )
             }
         }
